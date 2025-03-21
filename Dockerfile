@@ -1,8 +1,13 @@
-FROM nextcloud:29.0.7-apache AS base
+ARG VERSION
 
-ARG DEBIAN_FRONTEND=noninteractive
+FROM nextcloud:${VERSION}-apache AS base
+
+SHELL ["/bin/bash", "-c"]
+
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install ffmpeg --no-install-recommends -y && \
+    apt-get install imagemagick-common ffmpeg libmagickcore-dev -y && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
